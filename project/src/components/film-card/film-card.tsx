@@ -1,22 +1,20 @@
-type FilmsInfo = {
-  name: string;
-  previewImage: string;
-}[];
+import { Film } from '../../types/film-type';
 
-function FilmCard (filmsInfo: FilmsInfo): JSX.Element {
+type Props = {
+  film: Film;
+};
+
+function FilmCard ({ film }: Props): JSX.Element {
+  console.log(film)
     return (
-      <>
-        {filmsInfo.map((item) => (
-          <article className="small-film-card catalog__films-card">
-          <div className="small-film-card__image">
-            <img src={item.previewImage} alt={item.name} width="280" height="175" />
-          </div>
-          <h3 className="small-film-card__title">
-            <a className="small-film-card__link" href="film-page.html">{item.name}</a>
-          </h3>
-        </article>
-        ))}
-      </>
+      <article className="small-film-card catalog__films-card">
+        <div className="small-film-card__image">
+          <img src={film.previewImage} alt={film.name} width="280" height="175" />
+        </div>
+        <h3 className="small-film-card__title">
+          <a className="small-film-card__link" href="film-page.html">{film.name}</a>
+        </h3>
+      </article>
     );
   }
   
