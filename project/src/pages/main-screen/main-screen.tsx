@@ -3,9 +3,16 @@ import { Film } from '../../types/film-type';
 
 type Props = {
   films: Film[];
+  promoFilm: PromoFilm;
 };
 
-function MainScreen({ films }: Props): JSX.Element {
+type PromoFilm = {
+  name: string;
+  genre: string;
+  date: number;
+};
+
+function MainScreen({ films, promoFilm }: Props): JSX.Element {
     return (
       <>
         <section className="film-card">
@@ -43,10 +50,10 @@ function MainScreen({ films }: Props): JSX.Element {
               </div>
 
               <div className="film-card__desc">
-                <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+                <h2 className="film-card__title">{promoFilm.name}</h2>
                 <p className="film-card__meta">
-                  <span className="film-card__genre">Drama</span>
-                  <span className="film-card__year">2014</span>
+                  <span className="film-card__genre">{promoFilm.genre}</span>
+                  <span className="film-card__year">{promoFilm.date}</span>
                 </p>
 
                 <div className="film-card__buttons">
@@ -108,7 +115,7 @@ function MainScreen({ films }: Props): JSX.Element {
 
             <div className="catalog__films-list">
               {films.map((item) => (
-                <FilmCard key={item.name} {...item} />
+                <FilmCard key={item.id} {...item} />
               ))}
             </div>
 
