@@ -1,4 +1,10 @@
-function MyList() {
+import { FilmType } from '../../types/film-type';
+
+type Props = {
+  films: FilmType[];
+}
+
+function MyList(films: Props) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

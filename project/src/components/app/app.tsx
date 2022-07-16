@@ -1,5 +1,4 @@
-import { films } from '../../mocks/films';
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { PROMO_FILM } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -10,37 +9,42 @@ import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
+import { FilmType } from '../../types/film-type';
 
-function App(): JSX.Element {
+type AppProps = {
+  films: FilmType[];
+}
+
+function App({films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path = {'/'}
+          path = {AppRoute.Root}
           element = {<MainScreen films={films} promoFilm={PROMO_FILM} />}
         />
         <Route
-          path = {'/films/:id/review'}
+          path = {AppRoute.Review}
           element = {<AddReview />}
         />
         <Route
-          path = {'/films/:id'}
+          path = {AppRoute.Film}
           element = {<Film />}
         />
         <Route
-          path = {'/mylist'}
+          path = {AppRoute.List}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList />
+              <MyList films={films}/>
             </PrivateRoute>
           }
         />
         <Route
-          path = {'/player/:id'}
+          path = {AppRoute.Player}
           element = {<Player />}
         />
         <Route
-          path = {'/login'}
+          path = {AppRoute.Login}
           element = {<SignIn />}
         />
         <Route

@@ -1,8 +1,8 @@
 import FilmCard from '../../components/film-card/film-card';
-import { Film } from '../../types/film-type';
+import { FilmType } from '../../types/film-type';
 
 type Props = {
-  films: Film[];
+  films: FilmType[];
   promoFilm: PromoFilm;
 }
 
