@@ -1,5 +1,8 @@
 import FilmList from '../../components/film-list/film-list';
 import { Film } from '../../types/film';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
+import Footer from '../../components/footer/footer';
 
 type Props = {
   films: Film[];
@@ -17,17 +20,19 @@ function MainScreen({ films }: Props): JSX.Element {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link" href="/">
+            <Link to={AppRoute.Root} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <Link to={AppRoute.List}>
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </Link>
               </div>
             </li>
             <li className="user-block__item">
@@ -113,19 +118,8 @@ function MainScreen({ films }: Props): JSX.Element {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light" href="/">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+        <Footer />
 
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
       </div>
     </>
   );

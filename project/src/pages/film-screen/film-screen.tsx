@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { Film } from '../../types/film';
+import Footer from '../../components/footer/footer';
 
 type Props = {
   films: Film[];
@@ -27,7 +29,7 @@ function FilmScreen({films}: Props) {
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <Link to="/" className="logo__link">
+              <Link to={AppRoute.Root}className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -158,19 +160,8 @@ function FilmScreen({films}: Props) {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <Link to="/" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
+        <Footer />
 
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
       </div>
     </>
   );
