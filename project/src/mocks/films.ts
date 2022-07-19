@@ -1,6 +1,4 @@
-import { FilmType } from '../types/film-type';
-
-export const films: FilmType[] = [
+export const films = [
   {
     name: 'Snatch',
     posterImage: 'https://10.react.pages.academy/static/film/poster/Snatch.jpg',

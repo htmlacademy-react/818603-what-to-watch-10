@@ -1,13 +1,15 @@
-import { FilmType } from '../../types/film-type';
+import { Link } from 'react-router-dom';
+import { Film } from '../../types/film';
 
-function FilmCard ({ name, previewImage}: FilmType): JSX.Element {
+function FilmCard (film: Film): JSX.Element {
+  const handleArticleMouseEnter = () => film.id;
   return (
-    <article className="small-film-card catalog__films-card">
+    <article className="small-film-card catalog__films-card" onMouseEnter={handleArticleMouseEnter}>
       <div className="small-film-card__image">
-        <img src={previewImage} alt={name} width="280" height="175" />
+        <img src={film.previewImage} alt={film.name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link className="small-film-card__link" to={`films/${film.id}`}>{film.name}</Link>
       </h3>
     </article>
   );

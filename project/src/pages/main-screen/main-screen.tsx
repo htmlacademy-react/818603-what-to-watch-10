@@ -1,23 +1,16 @@
-import FilmCard from '../../components/film-card/film-card';
-import { FilmType } from '../../types/film-type';
+import FilmList from '../../components/film-list/film-list';
+import { Film } from '../../types/film';
 
 type Props = {
-  films: FilmType[];
-  promoFilm: PromoFilm;
+  films: Film[];
 }
 
-type PromoFilm = {
-  name: string;
-  genre: string;
-  date: number;
-}
-
-function MainScreen({ films, promoFilm }: Props): JSX.Element {
+function MainScreen({ films }: Props): JSX.Element {
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={films[0].backgroundImage} alt={films[0].name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -46,14 +39,14 @@ function MainScreen({ films, promoFilm }: Props): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={films[0].posterImage} alt={`${films[0].name }poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.name}</h2>
+              <h2 className="film-card__title">{films[0].name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.date}</span>
+                <span className="film-card__genre">{films[0].genre}</span>
+                <span className="film-card__year">{films[0].released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -113,11 +106,7 @@ function MainScreen({ films, promoFilm }: Props): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {films.map((item) => (
-              <FilmCard key={item.id} {...item} />
-            ))}
-          </div>
+          <FilmList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

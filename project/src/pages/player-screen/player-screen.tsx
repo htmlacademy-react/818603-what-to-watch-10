@@ -1,7 +1,13 @@
-function Player() {
+import { Film } from '../../types/film';
+
+type Props = {
+  films: Film[];
+}
+
+function PlayerScreen({films}: Props) {
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={films[0].videoLink} className="player__video" poster={films[0].previewImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -35,4 +41,4 @@ function Player() {
   );
 }
 
-export default Player;
+export default PlayerScreen;
