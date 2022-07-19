@@ -8,12 +8,19 @@ type Props = {
 function FilmScreen({films}: Props) {
   const {id} = useParams();
   const film = films.find((item) => item.id === Number(id));
+
+  if(!film) {
+    return (
+      <div>Loading</div>
+    );
+  }
+
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={(film) ? film.backgroundImage : ''} alt={(film) ? film.name : ''} />
+            <img src={film.backgroundImage} alt={film.name } />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -41,10 +48,10 @@ function FilmScreen({films}: Props) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{(film) ? film.name : ''}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{(film) ? film.genre : ''}</span>
-                <span className="film-card__year">{(film) ? film.released : ''}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -61,7 +68,7 @@ function FilmScreen({films}: Props) {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={(film) ? `films/${film.id}/review` : ''} className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -70,7 +77,7 @@ function FilmScreen({films}: Props) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={(film) ? film.posterImage : ''} alt={(film) ? `${film.name} 'poster'` : ''} width="218" height="327" />
+              <img src={film.posterImage} alt={`${film.name} 'poster'`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -89,7 +96,7 @@ function FilmScreen({films}: Props) {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">{(film) ? film.rating : ''}</div>
+                <div className="film-rating__score">{film.rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
                   <span className="film-rating__count">240 ratings</span>
@@ -97,11 +104,11 @@ function FilmScreen({films}: Props) {
               </div>
 
               <div className="film-card__text">
-                <p>{(film) ? film.description : ''}</p>
+                <p>{film.description}</p>
 
-                <p className="film-card__director"><strong>Director: {(film) ? film.director : ''}</strong></p>
+                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {(film) ? film.starring : ''} and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {film.starring.join(', ')} and other</strong></p>
               </div>
             </div>
           </div>

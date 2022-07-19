@@ -1,5 +1,5 @@
 import { Film } from '../../types/film';
-import FilmCard from '../../components/film-card/film-card';
+import FilmList from '../../components/film-list/film-list';
 
 type Props = {
   films: Film[];
@@ -35,9 +35,9 @@ function MyListScreen({films}: Props) {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {myFilms.map((item) => (
-            <FilmCard key={item.id} {...item} />
-          ))}
+
+          <FilmList films={myFilms} />
+
         </div>
       </section>
 

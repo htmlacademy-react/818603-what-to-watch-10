@@ -1,54 +1,32 @@
-import { useState } from 'react';
+import React from 'react';
+import { useState, ChangeEvent } from 'react';
 
 function ReviewForm() {
+  const inputs = Array.from({ length: 10 }, (_, i) => (
+    <React.Fragment key={i}>
+      <input className="rating__input" id={`star-${i + 1}`} type="radio" name="rating" value={i + 1} />
+      <label className="rating__label" htmlFor={`star-${i + 1}`}>{`Rating ${i + 1}`}</label>
+    </ React.Fragment>
+  )).reverse();
+
   const [formData, setFormData] = useState({
     rating: '',
     comment: ''
   });
-  const handleInputClick = (evt: string): void => {
-    if(evt.target.tagName === 'INPUT' ) {
-      const value = evt.target;
-      setFormData({...formData, rating: value});
-    }
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>)=> {
+    setFormData({...formData, rating: evt.target.value});
   };
-  const handleTextareaChange = (evt: string): void => {
-    const value = evt.target;
-    setFormData({...formData, comment: value});
+  const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>)=> {
+    setFormData({...formData, comment: evt.target.value});
   };
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
         <div className="rating">
-          <div className="rating__stars" onClick={handleInputClick}>
-            <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
-            <label className="rating__label" htmlFor="star-10">Rating 10</label>
+          <div className="rating__stars" onChange={handleInputChange}>
 
-            <input className="rating__input" id="star-9" type="radio" name="rating" value="9" />
-            <label className="rating__label" htmlFor="star-9">Rating 9</label>
+            {inputs}
 
-            <input className="rating__input" id="star-8" type="radio" name="rating" value="8" checked />
-            <label className="rating__label" htmlFor="star-8">Rating 8</label>
-
-            <input className="rating__input" id="star-7" type="radio" name="rating" value="7" />
-            <label className="rating__label" htmlFor="star-7">Rating 7</label>
-
-            <input className="rating__input" id="star-6" type="radio" name="rating" value="6" />
-            <label className="rating__label" htmlFor="star-6">Rating 6</label>
-
-            <input className="rating__input" id="star-5" type="radio" name="rating" value="5" />
-            <label className="rating__label" htmlFor="star-5">Rating 5</label>
-
-            <input className="rating__input" id="star-4" type="radio" name="rating" value="4" />
-            <label className="rating__label" htmlFor="star-4">Rating 4</label>
-
-            <input className="rating__input" id="star-3" type="radio" name="rating" value="3" />
-            <label className="rating__label" htmlFor="star-3">Rating 3</label>
-
-            <input className="rating__input" id="star-2" type="radio" name="rating" value="2" />
-            <label className="rating__label" htmlFor="star-2">Rating 2</label>
-
-            <input className="rating__input" id="star-1" type="radio" name="rating" value="1" />
-            <label className="rating__label" htmlFor="star-1">Rating 1</label>
           </div>
         </div>
 
