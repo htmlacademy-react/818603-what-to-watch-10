@@ -1,51 +1,54 @@
-import { films } from '../../mocks/films';
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { PROMO_FILM } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
-import AddReview from '../../pages/add-review/add-review';
-import Film from '../../pages/film/film';
-import MyList from '../../pages/my-list/my-list';
-import Player from '../../pages/player/player';
-import SignIn from '../../pages/sign-in/sign-in';
+import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
+import FilmScreen from '../../pages/film-screen/film-screen';
+import MyListScreen from '../../pages/my-list/my-list-screen';
+import PlayerScreen from '../../pages/player-screen/player-screen';
+import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
+import { Film } from '../../types/film';
 
-function App(): JSX.Element {
+type AppProps = {
+  films: Film[];
+}
+
+function App({films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path = {'/'}
-          element = {<MainScreen films={films} promoFilm={PROMO_FILM} />}
+          path={AppRoute.Root}
+          element={<MainScreen films={films} />}
         />
         <Route
-          path = {'/films/:id/review'}
-          element = {<AddReview />}
+          path={AppRoute.Review}
+          element={<AddReviewScreen films={films} />}
         />
         <Route
-          path = {'/films/:id'}
-          element = {<Film />}
+          path={AppRoute.Film}
+          element={<FilmScreen films={films} />}
         />
         <Route
-          path = {'/mylist'}
+          path={AppRoute.List}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList />
+              <MyListScreen films={films} />
             </PrivateRoute>
           }
         />
         <Route
-          path = {'/player/:id'}
-          element = {<Player />}
+          path={AppRoute.Player}
+          element={<PlayerScreen films={films}/>}
         />
         <Route
-          path = {'/login'}
-          element = {<SignIn />}
+          path={AppRoute.Login}
+          element={<SignInScreen />}
         />
         <Route
-          path = {'*'}
-          element = {<PageNotFound />}
+          path={'*'}
+          element={<PageNotFound />}
         />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,23 @@
-function Player() {
+import { Film } from '../../types/film';
+import { useParams } from 'react-router-dom';
+
+type Props = {
+  films: Film[];
+}
+
+function PlayerScreen({films}: Props) {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+
+  if(!film) {
+    return (
+      <div>Loading</div>
+    );
+  }
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster={film.previewImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -35,4 +51,4 @@ function Player() {
   );
 }
 
-export default Player;
+export default PlayerScreen;
