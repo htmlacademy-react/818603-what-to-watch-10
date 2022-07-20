@@ -41,7 +41,7 @@ function AddReviewScreen({films}: Props) {
                 <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="/">Add review</a>
+                <Link to={`/films/${film.id}/review`}className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -53,7 +53,7 @@ function AddReviewScreen({films}: Props) {
               </div>
             </li>
             <li className="user-block__item">
-              <Link to={`/films/${film.id}/review`} className="user-block__link">Sign out</Link>
+              <a className="user-block__link" href="/">Sign out</a>
             </li>
           </ul>
         </header>
