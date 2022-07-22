@@ -27,18 +27,14 @@ function ReviewForm() {
       <form action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
-
             {inputs}
-
           </div>
         </div>
-
         <div className="add-review__text">
           <textarea onChange={handleTextareaChange} value={formData.comment} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>
-
         </div>
       </form>
     </div>
