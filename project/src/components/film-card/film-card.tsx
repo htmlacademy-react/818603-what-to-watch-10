@@ -1,18 +1,28 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Film } from '../../types/film';
 import VideoPlayer from '../video-player/video-player';
 
 type Props = {
   film: Film;
-  active: boolean;
-  setActiveCardId: (filmId: number | undefined) => void;
 }
+let timer: NodeJS.Timeout | null = null;
 
-function FilmCard ({film, active, setActiveCardId}: Props): JSX.Element {
-
+function FilmCard ({film}: Props): JSX.Element {
+  const [isPlay, setIsPlay] = useState(false);
   const navigate = useNavigate();
-  const handleArticleMouseEnter = () => setActiveCardId(film.id);
-  const handleArticleMouseLeave = () => setActiveCardId(undefined);
+  const handleArticleMouseEnter = () => {
+    timer = setTimeout(() => {
+      setIsPlay(true);
+    }, 1000);
+  };
+  const handleArticleMouseLeave = () => {
+    if(timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+    setIsPlay(false);
+  };
   const handleArticleClick = () => navigate(`/films/${film.id}`);
 
   return (
@@ -22,7 +32,7 @@ function FilmCard ({film, active, setActiveCardId}: Props): JSX.Element {
       onClick={handleArticleClick}
     >
       <div className="small-film-card__image">
-        <VideoPlayer film={film} />
+        <VideoPlayer film={film} isPlay={isPlay} />
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`/films/${film.id}`}>{film.name}</Link>
