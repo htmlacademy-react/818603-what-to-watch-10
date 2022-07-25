@@ -14,7 +14,12 @@ function FilmScreen({films}: Props) {
   const [isActive, setIsActive] = useState([true, false, false]);
   const {id} = useParams();
   const film = films.find((item) => item.id === Number(id));
-  const moreLikeFilms = films.filter((item) => (film) ? item.genre === film.genre : '');
+  const moreLikeFilms = films.filter((item) => {
+    if(film && film !== item) {
+      return item.genre === film.genre;
+    }
+    return '';
+  });
 
   if(!film) {
     return (
