@@ -16,7 +16,6 @@ function FilmScreen({films}: Props) {
   const film = films.find((item) => item.id === Number(id));
   const moreLikeFilms = films.filter((item) => (film) ? item.genre === film.genre : '');
 
-  console.log(moreLikeFilms);
   if(!film) {
     return (
       <div>Loading</div>
