@@ -14,13 +14,13 @@ function VideoPlayer({film, isPlay}: Props): JSX.Element {
       if(isPlay) {
         videoRef.current.play();
       }else {
-        videoRef.current.pause();
+        videoRef.current.load();
       }
     }
-  }, [isPlay]);
+  }, [isPlay, film.posterImage]);
 
   return (
-    <video src={film.previewVideoLink} className="player__video" loop poster={film.posterImage} ref={videoRef} muted />
+    <video src={film.previewVideoLink} className="player__video" poster={film.posterImage} loop ref={videoRef} muted />
   );
 }
 

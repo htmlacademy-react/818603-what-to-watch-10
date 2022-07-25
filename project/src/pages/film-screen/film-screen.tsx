@@ -1,21 +1,41 @@
 import { Link, useParams } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, Tabs } from '../../const';
 import { Film } from '../../types/film';
 import Footer from '../../components/footer/footer';
+import FilmTabs from '../../components/film-tabs/film-tabs';
+import MoreLikeFilms from '../../components/more-like-films/more-like-films';
+import { useState } from 'react';
 
 type Props = {
   films: Film[];
 }
 
 function FilmScreen({films}: Props) {
+  const [isActive, setIsActive] = useState([true, false, false]);
   const {id} = useParams();
   const film = films.find((item) => item.id === Number(id));
+  const moreLikeFilms = films.filter((item) => (film) ? item.genre === film.genre : '');
 
+  console.log(moreLikeFilms);
   if(!film) {
     return (
       <div>Loading</div>
     );
   }
+
+  const handlerLiClick = (evt: React.MouseEvent<HTMLElement>) => {
+    switch(evt.currentTarget.textContent) {
+      case Tabs.Overviews:
+        setIsActive([true, false, false]);
+        break;
+      case Tabs.Details:
+        setIsActive([false, true, false]);
+        break;
+      case Tabs.Reviews:
+        setIsActive([false, false, true]);
+        break;
+    }
+  };
 
   return (
     <>
@@ -85,79 +105,28 @@ function FilmScreen({films}: Props) {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/" className="film-nav__link">Overview</a>
+                  <li onClick={handlerLiClick} className={isActive[0] ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
+                    <span className="film-nav__link">Overviews</span>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Details</a>
+                  <li onClick={handlerLiClick} className={isActive[1] ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
+                    <span className="film-nav__link">Details</span>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Reviews</a>
+                  <li onClick={handlerLiClick} className={isActive[2] ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
+                    <span className="film-nav__link">Reviews</span>
                   </li>
                 </ul>
               </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.description}</p>
-
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {film.starring.join(', ')} and other</strong></p>
-              </div>
+              <FilmTabs film={film} isActive={isActive} />
             </div>
           </div>
+
         </div>
       </section>
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
-          </div>
+          <MoreLikeFilms moreLikeFilms={(moreLikeFilms.length > 4) ? moreLikeFilms.slice(0, 4) : moreLikeFilms} />
         </section>
 
         <Footer />

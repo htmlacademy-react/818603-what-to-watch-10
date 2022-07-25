@@ -1,18 +1,19 @@
 import FilmCard from '../film-card/film-card';
+
 import { Film } from '../../types/film';
 
 type Props = {
-  films: Film[];
+  moreLikeFilms: Film[];
 }
 
-function FilmList({films}: Props) {
+function MoreLikeFilms({moreLikeFilms}: Props) {
   return (
     <div className="catalog__films-list">
-      {films.map((item) => (
+      {moreLikeFilms.map((item) => (
         <FilmCard key={item.id} film={item} />
       ))}
     </div>
   );
 }
 
-export default FilmList;
+export default MoreLikeFilms;

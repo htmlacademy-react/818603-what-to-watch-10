@@ -10,5 +10,11 @@ export enum AppRoute {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+  Unknown = 'UNKNOWN'
+}
+
+export enum Tabs {
+  Details = 'Details',
+  Overviews = 'Overviews',
+  Reviews = 'Reviews'
 }
