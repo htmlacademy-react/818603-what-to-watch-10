@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, ChangeEvent } from 'react';
 
-function ReviewForm() {
+function ReviewForm(): JSX.Element {
   const [formData, setFormData] = useState({
     rating: '',
     comment: ''
