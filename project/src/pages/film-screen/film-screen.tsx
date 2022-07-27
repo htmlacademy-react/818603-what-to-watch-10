@@ -1,25 +1,35 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { AppRoute, Tabs } from '../../const';
+import { AppRoute } from '../../const';
 import { Film } from '../../types/film';
 import Footer from '../../components/footer/footer';
-import FilmTabs from '../../components/film-tabs/film-tabs';
+import FilmOverviewsTab from '../../components/film-overviews-tab/film-overviews-tab';
+import FilmDetailsTab from '../../components/film-details-tab/film-details-tab';
+import FilmReviewsTab from '../../components/film-reviews-tab/film-reviews-tab';
 import MoreLikeFilms from '../../components/more-like-films/more-like-films';
-import { useState } from 'react';
+
 
 type Props = {
   films: Film[];
 }
 
+enum Tabs {
+  Overviews,
+  Details,
+  Reviews
+}
+
 function FilmScreen({films}: Props) {
-  const [isActive, setIsActive] = useState([true, false, false]);
   const {id} = useParams();
+  const [activeTab, setActiveTab] = useState<Tabs>(Tabs.Overviews);
+
   const film = films.find((item) => item.id === Number(id));
   const moreLikeFilms = films.filter((item) => {
     if(film && film !== item) {
       return item.genre === film.genre;
     }
-    return '';
-  });
+    return false;
+  }).slice(0, 4);
 
   if(!film) {
     return (
@@ -27,19 +37,9 @@ function FilmScreen({films}: Props) {
     );
   }
 
-  const handlerLiClick = (evt: React.MouseEvent<HTMLElement>) => {
-    switch(evt.currentTarget.textContent) {
-      case Tabs.Overviews:
-        setIsActive([true, false, false]);
-        break;
-      case Tabs.Details:
-        setIsActive([false, true, false]);
-        break;
-      case Tabs.Reviews:
-        setIsActive([false, false, true]);
-        break;
-    }
-  };
+  const openOverviewsTab = () => setActiveTab(Tabs.Overviews);
+  const openDetailsTab = () => setActiveTab(Tabs.Details);
+  const openReviewsTab = () => setActiveTab(Tabs.Reviews);
 
   return (
     <>
@@ -109,18 +109,20 @@ function FilmScreen({films}: Props) {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li onClick={handlerLiClick} className={isActive[0] ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
+                  <li onClick={openOverviewsTab} className={(activeTab === Tabs.Overviews) ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
                     <span className="film-nav__link">Overviews</span>
                   </li>
-                  <li onClick={handlerLiClick} className={isActive[1] ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
+                  <li onClick={openDetailsTab} className={(activeTab === Tabs.Details) ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
                     <span className="film-nav__link">Details</span>
                   </li>
-                  <li onClick={handlerLiClick} className={isActive[2] ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
+                  <li onClick={openReviewsTab} className={(activeTab === Tabs.Reviews) ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} style={{cursor:'pointer'}}>
                     <span className="film-nav__link">Reviews</span>
                   </li>
                 </ul>
               </nav>
-              <FilmTabs film={film} isActive={isActive} />
+              {activeTab === Tabs.Overviews && <FilmOverviewsTab film={film} />}
+              {activeTab === Tabs.Details && <FilmDetailsTab film={film} />}
+              {activeTab === Tabs.Reviews && <FilmReviewsTab />}
             </div>
           </div>
 
@@ -128,13 +130,8 @@ function FilmScreen({films}: Props) {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-          <MoreLikeFilms moreLikeFilms={(moreLikeFilms.length > 4) ? moreLikeFilms.slice(0, 4) : moreLikeFilms} />
-        </section>
-
+        <MoreLikeFilms moreLikeFilms={moreLikeFilms} />
         <Footer />
-
       </div>
     </>
   );
