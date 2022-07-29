@@ -1,5 +1,6 @@
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import MainScreen from '../../pages/main-screen/main-screen';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import FilmScreen from '../../pages/film-screen/film-screen';
@@ -8,19 +9,16 @@ import PlayerScreen from '../../pages/player-screen/player-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
-import { Film } from '../../types/film';
 
-type AppProps = {
-  films: Film[];
-}
-
-function App({films}: AppProps): JSX.Element {
+function App(): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen films={films} />}
+          element={<MainScreen films={filteredFilms} />}
         />
         <Route
           path={AppRoute.Review}
