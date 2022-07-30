@@ -7,7 +7,7 @@ function FilmReviewsTab(): JSX.Element {
       <blockquote className="review__quote">
         <p className="review__text">{data.comment}</p>
         <footer className="review__details">
-          <cite className="review__author">{data.user.name}{data.id}</cite>
+          <cite className="review__author">{data.user.name}</cite>
           <time className="review__date" dateTime="2016-12-20">{new Date(data.date).toLocaleString('en-us', { year:'numeric', month:'long', day:'numeric'})}</time>
         </footer>
       </blockquote>
